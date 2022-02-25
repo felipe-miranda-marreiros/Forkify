@@ -1,0 +1,26 @@
+{
+  "name": "forkify",
+  "version": "1.0.0",
+  "description": "Recipe application",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felipe-miranda-marreiros/Forkify.git"
+  },
+  "keywords": [
+    "recipe"
+  ],
+  "author": "Felipe Miranda Marreiros",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/felipe-miranda-marreiros/Forkify/issues"
+  },
+  "homepage": "https://github.com/felipe-miranda-marreiros/Forkify#readme",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.3.2",
+    "parcel": "^2.3.2"
+  }
+}

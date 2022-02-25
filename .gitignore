@@ -102,3 +102,15 @@ dist
 
 # TernJS port file
 .tern-port
+
+# forkify-flowchart
+forkify-flowchart-part-1.png
+forkify-flowchart-part-2.png
+forkify-flowchart-part-3.png
+forkify-architecture-recipe-loading.png
+
+# parcel-cache
+.parcel-cache/b38fa259d862cf2b
+.parcel-cache/data.mdb
+.parcel-cache/lock.mdb
+.parcel-cache/3fbf56d4ce09fa10
