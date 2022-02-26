@@ -4,6 +4,8 @@ import { Fraction } from 'fractional';
 class RecipeView {
   #parentElement = document.querySelector('.recipe');
   #data;
+  #errorMessage = 'We could not find that recipe. Please try another one!';
+  #Message = '';
 
   /**
    * @param  {} data é responsável por renderizar, globalmente, as receitas usando o método #generateMarkup()
@@ -21,7 +23,7 @@ class RecipeView {
    *
    * @param {html} parentEl recebe o parente mais próximo e coloca uma animação de "carregando" antes de qualquer coisa aparecer.
    */
-  renderSpinner = function () {
+  renderSpinner() {
     const markup = `
           <div class="spinner">
             <svg>
@@ -29,9 +31,41 @@ class RecipeView {
             </svg>
           </div>
     `;
-    this.#parentElement.innerHTML = '';
+    this.#clear();
     this.#parentElement.insertAdjacentHTML('afterbegin', markup);
-  };
+  }
+  /**
+   * @param  {} message=this.#errorMessage mostra uma mensagem de erro para o usuário caso uma receita não for encontrada
+   */
+  renderError(message = this.#errorMessage) {
+    const markup = `
+    <div class="error">
+      <div>
+        <svg>
+          <use href="${icons}#icon-alert-triangle"></use>
+        </svg>
+      </div>
+    <p>${message}. Please try again!</p>
+  </div>`;
+    this.#clear();
+    this.#parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+  /**
+   * @param  {} message=this.#errorMessage mostra uma mensagem de confirmação
+   */
+  renderMessage(message = this.#errorMessage) {
+    const markup = `
+    <div class="message">
+      <div>
+        <svg>
+          <use href="${icons}#icon-smile"></use>
+        </svg>
+      </div>
+    <p>${message}. Please try again!</p>
+  </div>`;
+    this.#clear();
+    this.#parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
   //Event Handlers - Publisher-Subscriber Pattern
   addHandlerRender(handler) {
     //A array abaixo tem como objetivo mostrar a função controlRecipes quando o haash (#) mudar no url e quando a página dê load.
