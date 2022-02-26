@@ -37,7 +37,8 @@ const controlRecipes = async function () {
      * A função de catch é detectar qualquer erro apresentado no try.
      */
   } catch (error) {
-    alert(error);
+    //O método renderError mostra uma mensagem de erro caso uma receita não for encontrada
+    recipeView.renderError();
   }
 };
 
