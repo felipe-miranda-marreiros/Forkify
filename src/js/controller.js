@@ -42,6 +42,10 @@ const renderSpinner = function (parentEl) {
  */
 const showRecipe = async function () {
   try {
+    //Essa variável tem como objetivo detectar qualquer mudança de link no url do navegador. Quando o link mudar, iremos pegar ID atual, por exemplo #5ed6604591c37cdc054bc886, e colocar dinamicamente no fetch (response)
+    const id = window.location.hash.slice(1);
+
+    if (!id) return;
     /**
      * Guardamos o conteúdo da API em uma variável chamada response. O fetch é precedido de await.
      */
@@ -51,7 +55,7 @@ const showRecipe = async function () {
     //////////////////////////////////////
     const response = await fetch(
       // 'https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bca36'
-      'https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886'
+      `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`
     );
     /**
      * Formatamos o conteúdo do fetch (que vem em string), em formato json(), conforme a variável abaixo.
@@ -194,4 +198,9 @@ const showRecipe = async function () {
   }
 };
 
-showRecipe();
+// showRecipe();
+
+//A array abaixo tem como objetivo mostrar a função showRecipe quando o haash (#) mudar no url e quando a página dê load.
+['hashchange', 'load'].forEach(event =>
+  window.addEventListener(event, showRecipe)
+);
