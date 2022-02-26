@@ -2,6 +2,10 @@ import { API_URL } from './config';
 import { getJSON } from './helpers';
 export const state = {
   recipe: {},
+  search: {
+    query: '',
+    results: [],
+  },
 };
 
 /**
@@ -10,7 +14,7 @@ export const state = {
  */
 export const loadRecipe = async function (id) {
   try {
-    const data = await getJSON(`${API_URL}/${id}`);
+    const data = await getJSON(`${API_URL}${id}`);
 
     /**
      * O objeto abaixo é uma forma de formatação da data recebida pelo fetch. É só uma reorganização de nome. Recipe faz parte da data.data.
@@ -28,6 +32,27 @@ export const loadRecipe = async function (id) {
       ingredients: recipe.ingredients,
     };
   } catch (error) {
+    throw error;
+  }
+};
+
+//A função abaxio tem como objetivo fazer fetch para buscar receitas. As receitas vem em formato Array.
+export const loadSearchResults = async function (query) {
+  try {
+    state.search.query = query;
+    const data = await getJSON(`${API_URL}?search=${query}`);
+
+    state.search.results = data.data.recipes.map(recipe => {
+      //O objeto abaixo é apenas questão de formatação
+      return {
+        id: recipe.id,
+        title: recipe.title,
+        publisher: recipe.publisher,
+        image: recipe.image_url,
+      };
+    });
+  } catch (error) {
+    console.log(error);
     throw error;
   }
 };

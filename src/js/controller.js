@@ -1,23 +1,8 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import searchView from './views/searchView';
 import * as model from './model';
 import recipeView from './views/recipeView';
-
-const { async } = require('regenerator-runtime');
-
-const recipeContainer = document.querySelector('.recipe');
-
-const timeout = function (s) {
-  return new Promise(function (_, reject) {
-    setTimeout(function () {
-      reject(new Error(`Request took too long! Timeout after ${s} second`));
-    }, s * 1000);
-  });
-};
-
-// https://forkify-api.herokuapp.com/v2
-
-///////////////////////////////////////
 
 const controlRecipes = async function () {
   try {
@@ -42,8 +27,19 @@ const controlRecipes = async function () {
   }
 };
 
+//A função abaixo tem como objetivo controlar o input do usuário
+const controlSearchResults = async function () {
+  try {
+    const query = searchView.getQuery();
+    if (!query) return;
+
+    await model.loadSearchResults(query);
+  } catch (error) {}
+};
+
 //Event Handlers - Publisher-Subscriber Pattern
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
+  searchView.addHandlerSearch(controlSearchResults);
 };
 init();
