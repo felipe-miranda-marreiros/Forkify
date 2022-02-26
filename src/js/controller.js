@@ -41,7 +41,8 @@ const controlRecipes = async function () {
   }
 };
 
-//A array abaixo tem como objetivo mostrar a função controlRecipes quando o haash (#) mudar no url e quando a página dê load.
-['hashchange', 'load'].forEach(event =>
-  window.addEventListener(event, controlRecipes)
-);
+//Event Handlers - Publisher-Subscriber Pattern
+const init = function () {
+  recipeView.addHandlerRender(controlRecipes);
+};
+init();

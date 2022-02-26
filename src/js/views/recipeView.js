@@ -32,6 +32,13 @@ class RecipeView {
     this.#parentElement.innerHTML = '';
     this.#parentElement.insertAdjacentHTML('afterbegin', markup);
   };
+  //Event Handlers - Publisher-Subscriber Pattern
+  addHandlerRender(handler) {
+    //A array abaixo tem como objetivo mostrar a função controlRecipes quando o haash (#) mudar no url e quando a página dê load.
+    ['hashchange', 'load'].forEach(event =>
+      window.addEventListener(event, handler)
+    );
+  }
   /**
    *
    * #generateMarkup é responsável por renderizar as receitas como imagens, informações, quantidades, etc.
