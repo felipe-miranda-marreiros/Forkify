@@ -14,7 +14,7 @@ export const state = {
  */
 export const loadRecipe = async function (id) {
   try {
-    const data = await getJSON(`${API_URL}${id}`);
+    const data = await getJSON(`${API_URL}/${id}`);
 
     /**
      * O objeto abaixo é uma forma de formatação da data recebida pelo fetch. É só uma reorganização de nome. Recipe faz parte da data.data.
@@ -41,7 +41,6 @@ export const loadSearchResults = async function (query) {
   try {
     state.search.query = query;
     const data = await getJSON(`${API_URL}?search=${query}`);
-
     state.search.results = data.data.recipes.map(recipe => {
       //O objeto abaixo é apenas questão de formatação
       return {
