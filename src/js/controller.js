@@ -1,11 +1,18 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+
 import searchView from './views/searchView';
 import * as model from './model';
-import recipeView from './views/recipeView';
 
+import recipeView from './views/recipeView';
+import resultsView from './views/resultsView';
+
+if (module.hot) {
+  module.hot.accept();
+}
 const controlRecipes = async function () {
   try {
+    // resultsView.renderSpinner();
     //Essa variável tem como objetivo detectar qualquer mudança de link no url do navegador. Quando o link mudar, iremos pegar ID atual, por exemplo #5ed6604591c37cdc054bc886, e colocar dinamicamente no fetch (response)
     const id = window.location.hash.slice(1);
 
@@ -30,10 +37,15 @@ const controlRecipes = async function () {
 //A função abaixo tem como objetivo controlar o input do usuário
 const controlSearchResults = async function () {
   try {
+    resultsView.renderSpinner();
+
     const query = searchView.getQuery();
     if (!query) return;
 
     await model.loadSearchResults(query);
+
+    //Renderizando preview de receitas
+    resultsView.render(model.state.search.results);
   } catch (error) {}
 };
 
