@@ -21,7 +21,8 @@
   "homepage": "https://github.com/felipe-miranda-marreiros/Forkify#readme",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.3.2",
-    "parcel": "^2.3.2"
+    "parcel": "^2.3.2",
+    "url": "^0.11.0"
   },
   "dependencies": {
     "core-js": "^3.21.1",
