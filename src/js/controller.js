@@ -45,7 +45,7 @@ const controlSearchResults = async function () {
     await model.loadSearchResults(query);
 
     //Renderizando preview de receitas
-    resultsView.render(model.state.search.results);
+    resultsView.render(model.getSearchResultsPage());
   } catch (error) {}
 };
 
