@@ -6,6 +6,7 @@ import * as model from './model';
 
 import recipeView from './views/recipeView';
 import resultsView from './views/resultsView';
+import paginationView from './views/paginationView';
 
 if (module.hot) {
   module.hot.accept();
@@ -44,14 +45,26 @@ const controlSearchResults = async function () {
 
     await model.loadSearchResults(query);
 
-    //Renderizando preview de receitas
-    resultsView.render(model.getSearchResultsPage());
+    //Renderizando preview de receitas com paginação (getSearchResultsPage)
+    resultsView.render(model.getSearchResultsPage(1));
+
+    //Renderização de botões da paginação
+    paginationView.render(model.state.search);
   } catch (error) {}
+};
+
+const controlPagination = function (goToPage) {
+  //Renderizando novos previews de receitas com paginação (getSearchResultsPage)
+  resultsView.render(model.getSearchResultsPage(goToPage));
+
+  //Renderização de novos botões da paginação
+  paginationView.render(model.state.search);
 };
 
 //Event Handlers - Publisher-Subscriber Pattern
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
   searchView.addHandlerSearch(controlSearchResults);
+  paginationView.addHandlerClick(controlPagination);
 };
 init();
