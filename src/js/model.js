@@ -1,3 +1,4 @@
+import { async } from 'regenerator-runtime';
 import { API_URL, RES_PER_PAGE } from './config';
 import { getJSON } from './helpers';
 export const state = {
@@ -16,7 +17,7 @@ export const state = {
  */
 export const loadRecipe = async function (id) {
   try {
-    const data = await getJSON(`${API_URL}/${id}`);
+    const data = await getJSON(`${API_URL}${id}`);
 
     /**
      * O objeto abaixo é uma forma de formatação da data recebida pelo fetch. É só uma reorganização de nome. Recipe faz parte da data.data.

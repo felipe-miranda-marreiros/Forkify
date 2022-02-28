@@ -20,6 +20,10 @@ const controlRecipes = async function () {
     if (!id) return;
     //Colocamos a função renderSpinner antes do fetch para criar a impressão de carregamento
     recipeView.renderSpinner();
+
+    //Marcação de resultado quando for buscado pelo usuário
+    resultsView.update(model.getSearchResultsPage());
+
     /**
      * @param  {} id pegamos ID do window.location.hash
      */
@@ -46,7 +50,7 @@ const controlSearchResults = async function () {
     await model.loadSearchResults(query);
 
     //Renderizando preview de receitas com paginação (getSearchResultsPage)
-    resultsView.render(model.getSearchResultsPage(1));
+    resultsView.render(model.getSearchResultsPage());
 
     //Renderização de botões da paginação
     paginationView.render(model.state.search);
@@ -59,13 +63,16 @@ const controlPagination = function (goToPage) {
 
   //Renderização de novos botões da paginação
   paginationView.render(model.state.search);
+
+  recipeView.update(model.state.recipe);
 };
 
 const controlServings = function (newServings) {
   //Atualizar a quantidade de porções de cada receita
   model.updateServings(newServings);
   //Atualizar o recipeView()
-  recipeView.render(model.state.recipe);
+  // recipeView.render(model.state.recipe);
+  recipeView.update(model.state.recipe);
 };
 
 //Event Handlers - Publisher-Subscriber Pattern
