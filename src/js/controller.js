@@ -106,13 +106,18 @@ const controlAddRecipe = async function (newRecipe) {
     addRecipeView.renderSpinner();
     //Fazer upload de uma nova receita para o Forkify
     await model.uploadRecipe(newRecipe);
-    console.log(model.state.recipe);
 
     //renderizar receita
     recipeView.render(model.state.recipe);
 
     //Mensagem de confirmação
     addRecipeView.renderMessage();
+
+    //Renderizar bookmark
+    bookmarksView.render(model.state.bookmarks);
+
+    //Mudar ID no URL
+    window.history.pushState(null, '', `#${model.state.recipe.id}`);
 
     //Fechar o modal window
     setTimeout(function () {
