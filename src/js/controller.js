@@ -7,6 +7,7 @@ import * as model from './model';
 import recipeView from './views/recipeView';
 import resultsView from './views/resultsView';
 import paginationView from './views/paginationView';
+import bookmarksView from './views/bookmarksView';
 
 if (module.hot) {
   module.hot.accept();
@@ -23,6 +24,7 @@ const controlRecipes = async function () {
 
     //Marcação de resultado quando for buscado pelo usuário
     resultsView.update(model.getSearchResultsPage());
+    bookmarksView.update(model.state.bookmarks);
 
     /**
      * @param  {} id pegamos ID do window.location.hash
@@ -76,13 +78,18 @@ const controlServings = function (newServings) {
 };
 
 const controlAddBookmark = function () {
+  //Adicionar ou remover bookmark
   if (!model.state.recipe.bookmarked) {
     model.addBookmark(model.state.recipe);
   } else {
     model.state.recipe.bookmarked;
     model.deleteBookmark(model.state.recipe.id);
   }
+  //Atualizar a receita para o usuário
   recipeView.update(model.state.recipe);
+
+  //Renderizar bookmarks
+  bookmarksView.render(model.state.bookmarks);
 };
 
 //Event Handlers - Publisher-Subscriber Pattern
