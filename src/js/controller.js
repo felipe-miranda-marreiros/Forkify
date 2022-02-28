@@ -3,6 +3,7 @@ import 'regenerator-runtime/runtime';
 
 import searchView from './views/searchView';
 import * as model from './model';
+import { MODAL_CLOSE_SEC } from './config';
 
 import recipeView from './views/recipeView';
 import resultsView from './views/resultsView';
@@ -99,9 +100,27 @@ const controlBookmars = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
-const controlAddRecipe = function (newRecipe) {
-  console.log(newRecipe);
-  //Fazer upload de uma nova receita para o Forkify
+const controlAddRecipe = async function (newRecipe) {
+  try {
+    //Mostrar loading spinner
+    addRecipeView.renderSpinner();
+    //Fazer upload de uma nova receita para o Forkify
+    await model.uploadRecipe(newRecipe);
+    console.log(model.state.recipe);
+
+    //renderizar receita
+    recipeView.render(model.state.recipe);
+
+    //Mensagem de confirmação
+    addRecipeView.renderMessage();
+
+    //Fechar o modal window
+    setTimeout(function () {
+      addRecipeView.toggleWindow();
+    }, MODAL_CLOSE_SEC * 1000);
+  } catch (error) {
+    addRecipeView.renderError(error.message);
+  }
 };
 //Event Handlers - Publisher-Subscriber Pattern
 const init = function () {
