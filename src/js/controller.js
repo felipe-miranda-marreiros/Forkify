@@ -8,6 +8,7 @@ import recipeView from './views/recipeView';
 import resultsView from './views/resultsView';
 import paginationView from './views/paginationView';
 import bookmarksView from './views/bookmarksView';
+import addRecipeView from './views/addRecipeView';
 
 if (module.hot) {
   module.hot.accept();
@@ -98,6 +99,10 @@ const controlBookmars = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
+const controlAddRecipe = function (newRecipe) {
+  console.log(newRecipe);
+  //Fazer upload de uma nova receita para o Forkify
+};
 //Event Handlers - Publisher-Subscriber Pattern
 const init = function () {
   bookmarksView.addHandlerRender(controlBookmars);
@@ -106,5 +111,6 @@ const init = function () {
   recipeView.addHandlerBookmark(controlAddBookmark);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
+  addRecipeView.addHandlerUpload(controlAddRecipe);
 };
 init();
