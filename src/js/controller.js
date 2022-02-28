@@ -24,7 +24,6 @@ const controlRecipes = async function () {
 
     //Marcação de resultado quando for buscado pelo usuário
     resultsView.update(model.getSearchResultsPage());
-    bookmarksView.update(model.state.bookmarks);
 
     /**
      * @param  {} id pegamos ID do window.location.hash
@@ -32,6 +31,9 @@ const controlRecipes = async function () {
     await model.loadRecipe(id);
     //Renderizando receitas abaixo
     recipeView.render(model.state.recipe);
+
+    //Atualizando bookmarks para o usuário
+    bookmarksView.update(model.state.bookmarks);
     /**
      * A função de catch é detectar qualquer erro apresentado no try.
      */
@@ -92,8 +94,13 @@ const controlAddBookmark = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
+const controlBookmars = function () {
+  bookmarksView.render(model.state.bookmarks);
+};
+
 //Event Handlers - Publisher-Subscriber Pattern
 const init = function () {
+  bookmarksView.addHandlerRender(controlBookmars);
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHandlerBookmark(controlAddBookmark);
